@@ -1,46 +1,46 @@
 import React, { useState } from "react";
-import User from '../../data/userData';
-
-const us = {
-    username:"",
-    password: "",
-    firstName: "",
-    lastName: "",
-    role: ""
-}
 
 function Register(){
-    const [formData, setFormData] = useState(us);
-    const { username, password, firstName, lastName,role } = formData;
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
-    const onChange = (e: any) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          [e.target.id]: "teseeesssst"
-        }));
-    }; 
+    const [message, setMessage] = useState('');
 
-    const getJson = async () => {
-        const getRes = await fetch ('http://localhost:8080/v1/addUser',{
+    const getJson = async (event:any) => {
+        event.preventDefault()
+        await fetch ('http://localhost:8080/v1/addUser',{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                formData
+                "username": username,
+                "firstName": firstName,
+                "lastName": lastName
             })
-        });
-        const jsonResponse = await getRes.json();
-        console.log("jsonResponse => " , jsonResponse);
-        // setPosts(jsonResponse)
+        }).then((response) => {
+            if(!response.ok){
+                setMessage('Error ' + response.status);
+            } else {
+                setMessage('Success');
+                setUsername('');
+                setFirstName('');
+                setLastName('');
+            }
+        }).catch((error) => {
+            console.log(error);
+        });        
     }
 
     return(
-        <div className="row">
+        <div className="registerUser" id="registerUser">
             <form onSubmit={getJson}>
-                <input id="firstname" placeholder="First Name" type="text" value={firstName} onChange={onChange}/><br />
-                <input id="lastname" placeholder="Last Name" type="text" value={lastName} onChange={onChange}/><br />
+                <input id="username" placeholder="Username" type="text" value={username} onChange={(event) => setUsername(event.target.value)}/><br />
+                <input id="firstname" placeholder="First Name" type="text" value={firstName} onChange={(event) => setFirstName(event.target.value)}/><br />
+                <input id="lastname" placeholder="Last Name" type="text" value={lastName} onChange={(event) => setLastName(event.target.value)}/><br />
                 <button type="submit">Add User</button>
+                <h1>{message}</h1>
             </form>
         </div>
         

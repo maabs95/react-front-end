@@ -23,21 +23,23 @@ function Get(){
             <br/>
             <button onClick={getJson} className="btn btn-primary">User</button>
             <br/>
-            <div className="col-md-12 text-center">
-            </div>
             <table>
                 <thead>
                     <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {posts.map((userValue,key) => {
                         return(
                             <tr key={key} >
+                                <td>{userValue.username}</td>
                                 <td>{userValue.firstName}</td>
                                 <td>{userValue.lastName}</td>
+                                <td><button>Delete</button></td>
                             </tr>
                         )
                     })}
