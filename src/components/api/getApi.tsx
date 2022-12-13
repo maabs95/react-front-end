@@ -17,15 +17,28 @@ export default function Get(){
         setPosts(jsonResponse)
     }
 
-    const deleteUser = async () => {
-        console.log("dfksdnlf");
-        const getRes = await fetch ('http://localhost:8080/v1/user',{
-            method: 'GET',
+    const [message, setMessage] = useState('');
+    const deleteUser = async (dataU:any) => {
+        const username = Object.keys(dataU).map(key=> dataU[key].username);
+        let stringusername = username[0];
+        const getRes = await fetch ('http://localhost:8080/v1/deleteUser',{
+            method: 'DELETE',
             headers: {
-                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "username": stringusername
+            })
+        }).then((response) => {
+            if(!response.ok){
+                setMessage('Error');
+            } else {
+                setMessage(stringusername + " deleted");
             }
+        }).catch((error) => {
+            console.log(error);
         });
-        // console.log("selected user >>>> " , selectedUser);
+
     }
 
     return(
@@ -50,12 +63,13 @@ export default function Get(){
                                 <td>{userValue.username}</td>
                                 <td>{userValue.firstName}</td>
                                 <td>{userValue.lastName}</td>
-                                <td><button onClick={() => deleteUser}>Delete</button></td>
+                                <td><button onClick={(e) => deleteUser({userValue})}>Delete</button></td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
+            {message}
         </div>
     )
 }
