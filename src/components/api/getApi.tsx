@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import User from '../../data/userData';
 
 
-function Get(){
+export default function Get(){
     const [posts,setPosts] = useState<User[]>([]);
     const getJson = async () => {
         const getRes = await fetch ('http://localhost:8080/v1/user',{
@@ -15,6 +15,17 @@ function Get(){
         const jsonResponse = await getRes.json();
         console.log("jsonResponse => " , jsonResponse);
         setPosts(jsonResponse)
+    }
+
+    const deleteUser = async () => {
+        console.log("dfksdnlf");
+        const getRes = await fetch ('http://localhost:8080/v1/user',{
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+            }
+        });
+        // console.log("selected user >>>> " , selectedUser);
     }
 
     return(
@@ -39,7 +50,7 @@ function Get(){
                                 <td>{userValue.username}</td>
                                 <td>{userValue.firstName}</td>
                                 <td>{userValue.lastName}</td>
-                                <td><button>Delete</button></td>
+                                <td><button onClick={() => deleteUser}>Delete</button></td>
                             </tr>
                         )
                     })}
@@ -48,5 +59,3 @@ function Get(){
         </div>
     )
 }
-
-export default Get
