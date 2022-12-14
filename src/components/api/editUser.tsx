@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useLocation} from 'react-router-dom';
+import User from '../../data/userData';
 
 function EditUser(){
     const [username, setUsername] = useState('');
@@ -9,9 +10,29 @@ function EditUser(){
     const [message, setMessage] = useState('');
 
     const location = useLocation();
-    console.log(location.state.username);
+    const [posts,setPosts] = useState<User>();
+    const getJson = async () => {
+        const getRes = await fetch ('http://localhost:8080/v1/getUserByUsername?username=' + location.state.username ,{
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+            }
+        });
 
-    const getJson = async (event:any) => {
+        const jsonResponse = await getRes.json();
+        let jsonvalue = jsonResponse[0];
+        let keyusername = jsonvalue.username;
+        console.log(keyusername);
+        setPosts(jsonvalue);
+    }
+
+    useEffect(()=>{
+        getJson();
+    },[])
+
+    // getJson();
+    
+    const postJson = async (event:any) => {
         event.preventDefault()
         await fetch ('http://localhost:8080/v1/editUser',{
             method: 'POST',
@@ -19,7 +40,7 @@ function EditUser(){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "username": username,
+                "username": posts?.username,
                 "passowrd": "123",
                 "firstName": firstName,
                 "lastName": lastName,
@@ -43,6 +64,12 @@ function EditUser(){
     return (
         <div className="editUser" id="editUser">
             <h1>Edit User</h1>
+            <form onSubmit={postJson}>
+                Username: <input id="username" type="text" placeholder={posts?.username} disabled={true} /><br />
+                First Name: <input id="firstname" type="text" placeholder={posts?.firstName} onChange={(event) => setFirstName(event.target.value)}/><br />
+                Last Name: <input id="lastname" type="text" placeholder={posts?.lastName} onChange={(event) => setLastName(event.target.value)}/><br />
+                <button type="submit">Save</button>
+            </form>
         </div>
     )
 }
