@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import User from '../../data/userData';
+import { FC } from "react";
 
-
-export default function Get(){
+const Get: FC = () => {
     const [posts,setPosts] = useState<User[]>([]);
     const getJson = async () => {
         const getRes = await fetch ('http://localhost:8080/v1/user',{
@@ -21,7 +21,7 @@ export default function Get(){
     const deleteUser = async (dataU:any) => {
         const username = Object.keys(dataU).map(key=> dataU[key].username);
         let stringusername = username[0];
-        const getRes = await fetch ('http://localhost:8080/v1/deleteUser',{
+        await fetch ('http://localhost:8080/v1/deleteUser',{
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
@@ -42,9 +42,8 @@ export default function Get(){
     }
 
     return(
-        <div className="row">
-            User List
-            <br/>
+        <div className="userRegister">
+            <h1>User List</h1>
             <button onClick={getJson} className="btn btn-primary">User</button>
             <br/>
             <table>
@@ -63,7 +62,10 @@ export default function Get(){
                                 <td>{userValue.username}</td>
                                 <td>{userValue.firstName}</td>
                                 <td>{userValue.lastName}</td>
-                                <td><button onClick={(e) => deleteUser({userValue})}>Delete</button></td>
+                                <td>
+                                    <button onClick={() => deleteUser({userValue})}>Edit</button>
+                                    <button onClick={() => deleteUser({userValue})}>Delete</button>
+                                </td>
                             </tr>
                         )
                     })}
@@ -73,3 +75,5 @@ export default function Get(){
         </div>
     )
 }
+
+export default Get;
