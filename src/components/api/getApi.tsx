@@ -1,6 +1,7 @@
 import { useState } from "react";
 import User from '../../data/userData';
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Get: FC = () => {
     const [posts,setPosts] = useState<User[]>([]);
@@ -13,7 +14,6 @@ const Get: FC = () => {
         });
 
         const jsonResponse = await getRes.json();
-        console.log("jsonResponse => " , jsonResponse);
         setPosts(jsonResponse)
     }
 
@@ -41,6 +41,13 @@ const Get: FC = () => {
 
     }
 
+    let navigate = useNavigate(); 
+    const routeChange = (dataU:any) =>{ 
+        const un = Object.keys(dataU).map(key=> dataU[key].username);
+        let path = '/editUser'; 
+        navigate(path,{state:{username:un[0]}});
+    }
+
     return(
         <div className="userRegister">
             <h1>User List</h1>
@@ -63,7 +70,7 @@ const Get: FC = () => {
                                 <td>{userValue.firstName}</td>
                                 <td>{userValue.lastName}</td>
                                 <td>
-                                    <button onClick={() => deleteUser({userValue})}>Edit</button>
+                                    <button onClick={() => routeChange({userValue})}>Edit</button>
                                     <button onClick={() => deleteUser({userValue})}>Delete</button>
                                 </td>
                             </tr>

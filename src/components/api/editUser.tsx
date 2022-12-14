@@ -1,23 +1,30 @@
 import React, { useState } from "react";
+import {useLocation} from 'react-router-dom';
 
-function Register(){
+function EditUser(){
     const [username, setUsername] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
     const [message, setMessage] = useState('');
 
+    const location = useLocation();
+    console.log(location.state.username);
+
     const getJson = async (event:any) => {
         event.preventDefault()
-        await fetch ('http://localhost:8080/v1/addUser',{
+        await fetch ('http://localhost:8080/v1/editUser',{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 "username": username,
+                "passowrd": "123",
                 "firstName": firstName,
-                "lastName": lastName
+                "lastName": lastName,
+                "role": "admin"
+
             })
         }).then((response) => {
             if(!response.ok){
@@ -33,19 +40,11 @@ function Register(){
         });        
     }
 
-    return(
-        <div className="registerUser" id="registerUser">
-            <h1> Add User</h1>
-            <form onSubmit={getJson}>
-                <input id="username" placeholder="Username" type="text" value={username} onChange={(event) => setUsername(event.target.value)}/><br />
-                <input id="firstname" placeholder="First Name" type="text" value={firstName} onChange={(event) => setFirstName(event.target.value)}/><br />
-                <input id="lastname" placeholder="Last Name" type="text" value={lastName} onChange={(event) => setLastName(event.target.value)}/><br />
-                <button type="submit">Add User</button>
-                <h1>{message}</h1>
-            </form>
+    return (
+        <div className="editUser" id="editUser">
+            <h1>Edit User</h1>
         </div>
-        
     )
 }
 
-export default Register
+export default EditUser;
