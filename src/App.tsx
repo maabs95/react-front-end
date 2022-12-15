@@ -5,6 +5,7 @@ import Register from './components/api/registerUser';
 import EditUser from './components/api/editUser';
 import NavigationBar from './components/NavigationBar';
 import Homepage from './components/Home';
+import Login from './components/api/login';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App: FC = () => {
@@ -13,6 +14,7 @@ const App: FC = () => {
       <NavigationBar />
       <div className="App">
         <Routes>
+          <Route path="/login" element={<Login />}/>
           <Route path="/" element={<Homepage />}/>
           <Route index element={<Homepage />} />
           <Route path="userList" element={<Get />} />

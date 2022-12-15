@@ -21,14 +21,12 @@ const Get: FC = () => {
     const deleteUser = async (dataU:any) => {
         const username = Object.keys(dataU).map(key=> dataU[key].username);
         let stringusername = username[0];
-        await fetch ('http://localhost:8080/v1/deleteUser',{
+        await fetch ('http://localhost:8080/v1/deleteUser?username=' + stringusername,{
             method: 'DELETE',
             headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "username": stringusername
-            })
+                'Accept': 'application/json',
+                "Content-Type": "application/json"                
+            }
         }).then((response) => {
             if(!response.ok){
                 setMessage('Error');

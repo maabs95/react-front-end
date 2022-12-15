@@ -21,8 +21,6 @@ function EditUser(){
 
         const jsonResponse = await getRes.json();
         let jsonvalue = jsonResponse[0];
-        let keyusername = jsonvalue.username;
-        console.log(keyusername);
         setPosts(jsonvalue);
     }
 
