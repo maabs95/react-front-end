@@ -25,7 +25,7 @@ const Login: FC = () => {
 
         const response = getRes;
         if(response.ok){
-            localStorage.setItem("auth",);
+            localStorage.setItem("auth","");
             let path = '/'; 
             navigate(path);
         } else {
