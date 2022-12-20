@@ -1,37 +1,50 @@
-import { useState } from "react";
-import User from '../../data/userData';
+import { useEffect, useState } from "react";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
+    let navigate = useNavigate(); 
+
+    useEffect(() => {
+        if ("auth" in localStorage) {
+            let path = '/'; 
+            navigate(path);
+        }
+      }, []);
+
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-
     const [message,setMessage] = useState('');
 
-    let navigate = useNavigate(); 
+    
     const auth = async (e:any) => {
         e.preventDefault();
-        const getRes = await fetch("http://localhost:8080/v1/login",{
+        fetch("http://localhost:8080/v1/login",{
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Accept': 'application/json',
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 "username": username,
                 "password": password
             })
-        });
+        }).then(response => {
+            if(response.ok){
+                return response.json();                
+            } else if(response.status === 401){
+                setMessage("Invalid username or password");
+            } else {
+                setMessage("Error");
+            }
+        }).then(data => {
+            localStorage.setItem("auth",data.Authorization);
+            // console.log("localStorage >> " + localStorage.getItem("auth"));
+            // localStorage.removeItem("auth");
 
-        const response = getRes;
-        if(response.ok){
-            localStorage.setItem("auth","");
-            let path = '/'; 
+            let path = '/home'; 
             navigate(path);
-        } else {
-
-        }
-        
+        });
     }
 
     return(
@@ -42,7 +55,7 @@ const Login: FC = () => {
                 <input id="password" placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}/><br />
                 <button type="submit">Login</button>
             </form>
-            {message}
+            <div className="error-message">{message}</div>
         </div>
     )
 }

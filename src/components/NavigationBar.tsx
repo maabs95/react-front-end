@@ -1,11 +1,19 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavigationBar() {
+
+    let navigate = useNavigate(); 
+    const logout = (dataU:any) =>{ 
+        localStorage.removeItem("auth");
+        navigate('/login');
+    }
+
     return (
         <nav>
             <ul className="navbar">
                 <li className="navbar-li">
-                    <Link to="/">Home</Link>
+                    <Link to="/home">Home</Link>
                 </li>
                 <li className="navbar-li">
                     <Link to="/userList">User List</Link>
@@ -14,11 +22,8 @@ export default function NavigationBar() {
                     <Link to="/addUser">Add User</Link>
                 </li>
                 <li className="navbar-li">
-                    <Link to="/logout">Logout</Link>
-                </li>
-                <li className="navbar-li">
-                    <Link to="/login">Login</Link>
-                </li>
+                    <Link to="/login" onClick={logout}>Logout</Link>
+                </li>              
             </ul>
         </nav>
     )
