@@ -36,7 +36,7 @@ function EditUser(){
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('');
-    const [password,setPassword] = useState('');
+    // const [password,setPassword] = useState('');
 
     const [message, setMessage] = useState('');
 
@@ -52,7 +52,6 @@ function EditUser(){
         });
 
         const jsonResponse = await getRes.json();
-        let jsonvalue = jsonResponse[0];
         console.log(jsonResponse);
         setPosts(jsonResponse);
     }
@@ -73,7 +72,7 @@ function EditUser(){
             },
             body: JSON.stringify({
                 "username": posts?.username,
-                "password": password,
+                // "password": password,
                 "firstname": firstname,
                 "lastname": lastname,
                 "email":email,
@@ -105,7 +104,7 @@ function EditUser(){
                     <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                     <option value="ROLE_USER">ROLE_USER</option>
                 </select><br/>
-                Password: <input id="password" type="password" onChange={(event) => setPassword(event.target.value)}/><br />
+                {/* Password: <input id="password" type="password" onChange={(event) => setPassword(event.target.value)}/><br /> */}
                 <button type="submit">Save</button>
             </form>
         </div>
