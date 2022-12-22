@@ -26,7 +26,7 @@ const Get: FC = () => {
                 navigate(path);
             }
         }
-    }
+    }sad
 
     useEffect(()=>{
         validation()
