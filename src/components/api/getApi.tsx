@@ -28,6 +28,8 @@ const Get: FC = () => {
         }
     }
 
+    console.log("test pre-commit")
+
     useEffect(()=>{
         validation()
     },[])
