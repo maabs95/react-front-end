@@ -126,7 +126,7 @@ const Get: FC = () => {
             <table>
                 <thead>
                     <tr>
-                        <th><button onClick={deleteChosen}>Delete Chosen</button></th>
+                        {/* <th><button onClick={deleteChosen}>Delete Chosen</button></th> */}
                         <th>Username</th>
                         <th>First Name</th>
                         <th>Last Name</th>
@@ -139,7 +139,7 @@ const Get: FC = () => {
                     {posts.map((userValue,key) => {
                         return(
                             <tr key={key} >
-                                <td><input type="checkbox" name="delete" value={userValue.username} onChange={(event) => checkedDelete(event.target.value, event.target.checked)} /></td>
+                                {/* <td><input type="checkbox" name="delete" value={userValue.username} onChange={(event) => checkedDelete(event.target.value, event.target.checked)} /></td> */}
                                 <td>{userValue.username}</td>
                                 <td>{userValue.firstname}</td>
                                 <td>{userValue.lastname}</td>
