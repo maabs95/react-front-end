@@ -54,7 +54,7 @@ function EditUser(){
         const jsonResponse = await getRes.json();
         console.log(jsonResponse);
         setPosts(jsonResponse);
-        setFirstName(jsonResponse.username);
+        setFirstName(jsonResponse.firstname);
         setLastName(jsonResponse.lastname);
         setEmail(jsonResponse.email);
         setRole(jsonResponse.role);
@@ -107,7 +107,7 @@ function EditUser(){
                 First Name: <input id="firstname" type="text" placeholder={posts?.firstname} onChange={(event) => setFirstName(event.target.value)}/><br />
                 Last Name: <input id="lastname" type="text" placeholder={posts?.firstname} onChange={(event) => setLastName(event.target.value)}/><br />
                 Email: <input id="email" placeholder={posts?.email} type="text" onChange={(event) => setEmail(event.target.value)}/><br />
-                Role: <select name="role" id="role" value={posts?.role} onChange={(event) => setRole(event.target.value)}>
+                Role: <select name="role" id="role" value={role} onChange={(event) => setRole(event.target.value)}>
                     <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                     <option value="ROLE_USER">ROLE_USER</option>
                 </select><br/>
