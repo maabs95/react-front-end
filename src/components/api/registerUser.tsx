@@ -40,6 +40,11 @@ function Register(){
     const [message, setMessage] = useState('');
 
     const getJson = async (event:any) => {
+        // console.log("ROLE >> " + role.length);
+        // if(role === '' || role == undefined || role.length == 0){
+        //     setRole('ROLE_USER');
+        // }
+        // console.log("ROLE >> " + role);
         event.preventDefault()
         await fetch ('http://localhost:8080/v1/addUser',{
             method: 'POST',
@@ -53,7 +58,7 @@ function Register(){
                 "lastname": lastName,
                 "password": password,
                 "email":email,
-                "role":role
+                "role":role.length == 0? "ROLE_USER": role
             })
         }).then((response) => {
             if(!response.ok){
@@ -63,6 +68,8 @@ function Register(){
                 setUsername('');
                 setFirstName('');
                 setLastName('');
+                setEmail('');
+                setPassword('');
             }
         }).catch((error) => {
             console.log(error);
@@ -76,11 +83,11 @@ function Register(){
                 <input id="username" placeholder="Username" type="text" value={username} onChange={(event) => setUsername(event.target.value)}/><br />
                 <input id="firstname" placeholder="First Name" type="text" value={firstName} onChange={(event) => setFirstName(event.target.value)}/><br />
                 <input id="lastname" placeholder="Last Name" type="text" value={lastName} onChange={(event) => setLastName(event.target.value)}/><br />
-                <input id="password" placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}/><br />
+                <input id="password" placeholder="Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)}/><br />
                 <input id="email" placeholder="Email" type="text" value={email} onChange={(event) => setEmail(event.target.value)}/><br />
-                <select name="role" id="role" value="ROLE_USER" onChange={(event) => setRole(event.target.value)}>
-                    <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                <select name="role" id="role" onChange={(event) => setRole(event.target.value)}>
                     <option value="ROLE_USER">ROLE_USER</option>
+                    <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                 </select><br/>
                 <button type="submit">Add User</button>
                 <h1>{message}</h1>
