@@ -32,6 +32,8 @@ const App: FC = () => {
       </div>
     </BrowserRouter>
   );
+ 
+  
 }
 
 export default App;

@@ -9,8 +9,8 @@ export type ProtectedRouteProps = {
 
 export default function PrivateRoute ({loginPage, elem}: ProtectedRouteProps) {
 
-    let status;
-    const [statusVal, setStatusVal] = useState(Number);
+    // let status;
+    // const [statusVal, setStatusVal] = useState(Number);
     // const validate = async () => {
     //     // e.preventDefault();
     //     const getRes = await fetch("http://localhost:8080/v1/loggedInUser",{
@@ -31,9 +31,9 @@ export default function PrivateRoute ({loginPage, elem}: ProtectedRouteProps) {
 
     // console.log(v);
 
-    useEffect(()=>{
-        validation();
-    },[])
+    // useEffect(()=>{
+    //     validation();
+    // },[])
 
     // console.log(status);
     // v.then(function(result) {
@@ -42,7 +42,7 @@ export default function PrivateRoute ({loginPage, elem}: ProtectedRouteProps) {
     // });
 
     // console.log(statusVal);
-    if(status === 200){
+    if("auth" in localStorage && "role" in localStorage){
         console.log("authenticate");
         return elem;
     }else {

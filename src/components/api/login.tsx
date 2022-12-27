@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
     let navigate = useNavigate(); 
-
+    
     useEffect(() => {
         if ("auth" in localStorage) {
             let path = '/'; 
@@ -39,7 +39,8 @@ const Login: FC = () => {
             }
         }).then(data => {
             localStorage.setItem("auth",data.Authorization);
-            // console.log("localStorage >> " + localStorage.getItem("auth"));
+            localStorage.setItem("role",data.role)
+;            // console.log("localStorage >> " + localStorage.getItem("auth"));
             // localStorage.removeItem("auth");
 
             let path = '/home'; 
