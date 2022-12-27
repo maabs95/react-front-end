@@ -54,6 +54,10 @@ function EditUser(){
         const jsonResponse = await getRes.json();
         console.log(jsonResponse);
         setPosts(jsonResponse);
+        setFirstName(jsonResponse.username);
+        setLastName(jsonResponse.lastname);
+        setEmail(jsonResponse.email);
+        setRole(jsonResponse.role);
     }
 
     useEffect(()=>{
@@ -82,10 +86,13 @@ function EditUser(){
             if(!response.ok){
                 setMessage('Error ' + response.status);
             } else {
-                setMessage('Success');
+                setMessage('Updated');
                 setUsername('');
                 setFirstName('');
                 setLastName('');
+                if(role == localStorage.getItem("role")){
+                    localStorage.setItem("role",role)
+                }
             }
         }).catch((error) => {
             console.log(error);
@@ -107,6 +114,7 @@ function EditUser(){
                 {/* Password: <input id="password" type="password" onChange={(event) => setPassword(event.target.value)}/><br /> */}
                 <button type="submit">Save</button>
             </form>
+            <h2>{message}</h2>
         </div>
     )
 }
